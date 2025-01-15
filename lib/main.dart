@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/onboading/onboarding.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/splash/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
       routes: {
-        // '/': (context) => const MyHomePage(),
-        // '/menu': (context) => const MenuPage(),
+        '/': (context) => const SplashPage(),
+        '/onboarding': (context) => const OnboardingPage(),
         // '/cart': (context) => const CartPage(),
       },
     );

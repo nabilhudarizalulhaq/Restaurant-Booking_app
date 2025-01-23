@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/home/home.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/login.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/onboading/onboarding.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/splash/splash.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SplashPage(),
         '/onboarding': (context) => const OnboardingPage(),
+        '/login': (context) => const LoginAndRegisterPage(),
         '/home': (context) => const HomePage(),
       },
     );

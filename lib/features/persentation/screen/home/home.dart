@@ -9,11 +9,55 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           height: 100,
-          width: 100,
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: primaryColor,
+            color: secondaryColor,
             borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.restaurant,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Restaurant Booking',
+                    style: greenTextStyle.copyWith(
+                      fontSize: 20,
+                      fontWeight: bold,
+                    ),
+                  ),
+                  Text(
+                    'Book your favorite restaurant',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

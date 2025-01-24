@@ -7,7 +7,7 @@ Color gray = const Color(0xffBEBAB3);
 Color lightGray = const Color(0xffF8F2EE);
 Color white = const Color(0xffFFFFFF);
 Color primaryColor = const Color(0xff32B768);
-Color secondaryColor = const Color(0xff65AAEA);
+Color secondaryColor = const Color(0xffD1FAE5);
 Color succesColor = const Color(0xff5BA092);
 Color errorColor = const Color(0xffEF4949);
 Color warningColor = const Color(0xffF2A03F);
@@ -20,17 +20,17 @@ TextStyle blackTextStyle = GoogleFonts.inter(
 TextStyle whiteTextStyle = GoogleFonts.inter(
   color: white,
 );
-TextStyle greyTextStyle = GoogleFonts.rubik(
+TextStyle greyTextStyle = GoogleFonts.inter(
   color: gray,
 );
-TextStyle orangeTextStyle = GoogleFonts.rubik(
+TextStyle orangeTextStyle = GoogleFonts.inter(
   color: primaryColor,
 );
-TextStyle blueTextStyle = GoogleFonts.rubik(
+TextStyle blueTextStyle = GoogleFonts.inter(
   color: secondaryColor,
 );
-TextStyle greenTextStyle = GoogleFonts.rubik(
-  color: succesColor,
+TextStyle greenTextStyle = GoogleFonts.inter(
+  color: primaryColor,
 );
 
 FontWeight light = FontWeight.w300;

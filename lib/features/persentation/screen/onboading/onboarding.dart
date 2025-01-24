@@ -108,7 +108,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         TextButton(
                           onPressed: () {
                             Navigator.pushNamedAndRemoveUntil(
-                                context, '/login', (route) => false);
+                                context, '/onlogin', (route) => false);
                           },
                           child: Text(
                             'Skip',
@@ -163,9 +163,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         Spacer(),
                         IconButton(
                           onPressed: () {
-                            // carouselController.nextPage(
-                            //   duration: const Duration(milliseconds: 300),
-                            // );
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/onlogin', (route) => false);
                           },
                           icon: Icon(
                             Icons.arrow_forward_outlined,

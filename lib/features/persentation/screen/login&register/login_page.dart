@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/bloc/auth_bloc.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/login&register/widget/button_login.dart';
 import 'package:restaurant_booking_app/features/shared/thame.dart';
 
@@ -8,6 +10,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Controllers for email and password input
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: ListView(
         children: [
@@ -15,9 +21,7 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 22),
             child: Column(
               children: [
-                SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 Center(
                   child: SvgPicture.asset(
                     'assets/svg/order_img.svg',
@@ -25,9 +29,7 @@ class LoginPage extends StatelessWidget {
                     height: 200,
                   ),
                 ),
-                SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 Text(
                   'Login',
                   style: greenTextStyle.copyWith(
@@ -35,14 +37,13 @@ class LoginPage extends StatelessWidget {
                     fontWeight: bold,
                   ),
                 ),
-                SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
+                // Email Field
                 TextFormField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     hintText: 'Email',
-                    // label: Text('Email'),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Colors.grey,
                     ),
                     border: OutlineInputBorder(
@@ -50,14 +51,14 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
+                // Password Field
                 TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Password',
-                    // label: Text('Password'),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Colors.grey,
                     ),
                     border: OutlineInputBorder(
@@ -65,12 +66,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
+                  children: const [
                     Text(
                       'Forgot Password?',
                       style: TextStyle(
@@ -79,22 +78,60 @@ class LoginPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 16,
-                ),
-                buttonLogin(
-                  text: 'Login',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                const SizedBox(height: 16),
+                // BlocConsumer for managing AuthBloc
+                BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    state.maybeWhen(
+                      success: (auth) {
+                        // Navigate to home screen when login is successful
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      failure: (error) {
+                        // Show error message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Login failed: $error')),
+                        );
+                      },
+                      orElse: () {},
+                    );
+                  },
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      orElse: () => buttonLogin(
+                        text: 'Login',
+                        onPressed: () {
+                          final email = emailController.text.trim();
+                          final password = passwordController.text.trim();
+
+                          if (email.isNotEmpty && password.isNotEmpty) {
+                            // Dispatch login event
+                            context.read<AuthBloc>().add(
+                                  AuthEvent.login(
+                                    email: email,
+                                    password: password,
+                                  ),
+                                );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please fill in all fields'),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    );
                   },
                 ),
-                SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Don\'t have an account?',
                       style: TextStyle(
                         color: Colors.grey,
@@ -104,7 +141,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushNamed(context, '/register');
                       },
-                      child: Text(
+                      child: const Text(
                         'Register',
                         style: TextStyle(
                           color: Colors.green,

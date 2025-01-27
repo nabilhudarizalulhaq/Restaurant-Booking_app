@@ -1,34 +1,39 @@
-//
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:restaurant_booking_app/features/models/home/user_list.dart';
+import 'package:restaurant_booking_app/features/models/user_list.dart';
 
-class UserRemoteDataSource {
+void main() async {
+  const baseUrl = 'https://reqres.in';
+  final remoteDataSource = RemoteDataSource(baseUrl: baseUrl);
+
+  try {
+    final userlist = await remoteDataSource.fetchUserList();
+    print('User list fetched successfully:');
+    for (var user in userlist.data) {
+      print('${user.firstName} ${user.lastName} - ${user.email}');
+    }
+  } catch (e) {
+    print('Error fetching user list: $e');
+  }
+}
+
+class RemoteDataSource {
   final String baseUrl;
 
-  UserRemoteDataSource(this.baseUrl);
+  RemoteDataSource({required this.baseUrl});
 
-  Future<List<User>> fetchUsers() async {
-    final url = Uri.parse('https://reqres.in/api/users?page=2');
+  Future<Userlist> fetchUserList() async {
+    final url = Uri.parse('$baseUrl/api/users?page=2');
 
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
+    try {
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseBody = jsonDecode(response.body);
-      if (responseBody.containsKey('data')) {
-        final userListResponse = UserList.fromJson(responseBody);
-        return userListResponse.data;
+      if (response.statusCode == 200) {
+        return userlistFromJson(response.body);
       } else {
-        throw Exception('Failed to load users: No data found');
+        throw Exception('Failed to load user list: ${response.statusCode}');
       }
-    } else {
-      throw Exception(
-          'Failed to load users. Status code: ${response.statusCode}');
+    } catch (e) {
+      throw Exception('Failed to fetch user list: $e');
     }
   }
 }

@@ -1,102 +1,145 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_booking_app/features/datasource/user_datasource.dart';
-import "package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_bloc.dart";
-import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_event.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_state.dart';
+import 'package:restaurant_booking_app/features/models/user_list.dart';
 import 'package:restaurant_booking_app/features/shared/thame.dart';
+import 'bloc/userlist_bloc.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'User List',
+          style: whiteTextStyle.copyWith(
+            fontSize: 28,
+            fontWeight: black,
+          ),
+        ),
+        backgroundColor: primaryColor,
+      ),
       body: BlocProvider(
-        create: (context) => UserListBloc(
-          UserRemoteDataSource(
-            'https://reqres.in/api/users?page=2',
-          ),
-          userRepository: UserRemoteDataSource(
-            'https://reqres.in/api/users?page=2',
-          ),
-        )..add(const UserListEvent.fetchUserList()),
-        child: BlocBuilder<UserListBloc, UserListState>(
+        create: (context) => UserlistBloc(
+          remoteDataSource: RemoteDataSource(baseUrl: 'https://reqres.in'),
+        )..add(const UserlistEvent.fetchUserList()),
+        child: BlocBuilder<UserlistBloc, UserlistState>(
           builder: (context, state) {
-            return state.when(
-              initial: () => const Center(
-                child: Text('No data available'),
-              ),
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              loaded: (users) {
-                return ListView.builder(
-                  itemCount: users.length,
-                  itemBuilder: (context, index) {
-                    final user = users[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 20),
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  user.avatar,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${user.firstName} ${user.lastName}',
-                                  style: greenTextStyle.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: bold,
-                                  ),
-                                ),
-                                Text(
-                                  user.email,
-                                  style: blackTextStyle.copyWith(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+            return state.map(
+              initial: (_) => const Center(child: Text('Welcome!')),
+              loading: (_) => const Center(child: CircularProgressIndicator()),
+              loaded: (data) => ListView.builder(
+                itemCount: data.userlist.data.length,
+                itemBuilder: (context, index) {
+                  final user = data.userlist.data[index];
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserDetail(user: user),
                       ),
-                    );
-                  },
-                );
-              },
-              error: (message) => Center(
-                child: Text(
-                  'Error: $message',
-                ),
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 8),
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(22),
+                              image: DecorationImage(
+                                image: NetworkImage(user.avatar),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${user.firstName} ${user.lastName}',
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 22,
+                                  fontWeight: bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                user.email,
+                                style: greenTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: semiBold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
+              error: (error) => Center(child: Text('Error: ${error.message}')),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class UserDetail extends StatelessWidget {
+  final ListUser user;
+
+  const UserDetail({super.key, required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('User Detail'),
+        backgroundColor: primaryColor,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(user.avatar),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                '${user.firstName} ${user.lastName}',
+                style: blackTextStyle.copyWith(
+                  fontSize: 24,
+                  fontWeight: bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                user.email,
+                style: greenTextStyle.copyWith(
+                  fontSize: 18,
+                  fontWeight: semiBold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

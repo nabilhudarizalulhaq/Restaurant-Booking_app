@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_booking_app/features/datasource/user_datasource.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_bloc.dart';
+import "package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_bloc.dart";
 import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_event.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_state.dart';
 import 'package:restaurant_booking_app/features/shared/thame.dart';
@@ -14,8 +14,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => UserListBloc(
-          userRepository: UserRepository(
-            apiUrl: 'https://reqres.in/api/users?page=2',
+          UserRemoteDataSource(
+            'https://reqres.in/api/users?page=2',
+          ),
+          userRepository: UserRemoteDataSource(
+            'https://reqres.in/api/users?page=2',
           ),
         )..add(const UserListEvent.fetchUserList()),
         child: BlocBuilder<UserListBloc, UserListState>(

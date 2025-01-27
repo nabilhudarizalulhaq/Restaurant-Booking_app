@@ -4,9 +4,9 @@ import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/us
 import 'package:restaurant_booking_app/features/persentation/screen/home/bloc/user_list_state.dart';
 
 class UserListBloc extends Bloc<UserListEvent, UserListState> {
-  final UserRepository userRepository;
+  final UserRemoteDataSource userRepository;
 
-  UserListBloc({required this.userRepository})
+  UserListBloc(UserRemoteDataSource userRemoteDataSource, {required this.userRepository})
       : super(const UserListState.initial());
 
   Stream<UserListState> mapEventToState(UserListEvent event) async* {
@@ -19,7 +19,7 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
     yield const UserListState.loading();
     try {
       final users = await userRepository.fetchUsers();
-      yield UserListState.loaded(users: users);
+      yield UserListState.loaded(user: users);
     } catch (e) {
       yield UserListState.error(message: e.toString());
     }

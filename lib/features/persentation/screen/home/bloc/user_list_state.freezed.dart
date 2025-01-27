@@ -20,7 +20,7 @@ mixin _$UserListState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<User> users) loaded,
+    required TResult Function(List<User> user) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$UserListState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<User> users)? loaded,
+    TResult? Function(List<User> user)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$UserListState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<User> users)? loaded,
+    TResult Function(List<User> user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -132,7 +132,7 @@ class _$UserListInitialImpl implements UserListInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<User> users) loaded,
+    required TResult Function(List<User> user) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -143,7 +143,7 @@ class _$UserListInitialImpl implements UserListInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<User> users)? loaded,
+    TResult? Function(List<User> user)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -154,7 +154,7 @@ class _$UserListInitialImpl implements UserListInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<User> users)? loaded,
+    TResult Function(List<User> user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -249,7 +249,7 @@ class _$UserListLoadingImpl implements UserListLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<User> users) loaded,
+    required TResult Function(List<User> user) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -260,7 +260,7 @@ class _$UserListLoadingImpl implements UserListLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<User> users)? loaded,
+    TResult? Function(List<User> user)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -271,7 +271,7 @@ class _$UserListLoadingImpl implements UserListLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<User> users)? loaded,
+    TResult Function(List<User> user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -329,7 +329,7 @@ abstract class _$$UserListLoadedImplCopyWith<$Res> {
           $Res Function(_$UserListLoadedImpl) then) =
       __$$UserListLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<User> users});
+  $Res call({List<User> user});
 }
 
 /// @nodoc
@@ -345,12 +345,12 @@ class __$$UserListLoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? users = null,
+    Object? user = null,
   }) {
     return _then(_$UserListLoadedImpl(
-      users: null == users
-          ? _value._users
-          : users // ignore: cast_nullable_to_non_nullable
+      user: null == user
+          ? _value._user
+          : user // ignore: cast_nullable_to_non_nullable
               as List<User>,
     ));
   }
@@ -359,20 +359,19 @@ class __$$UserListLoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UserListLoadedImpl implements UserListLoaded {
-  const _$UserListLoadedImpl({required final List<User> users})
-      : _users = users;
+  const _$UserListLoadedImpl({required final List<User> user}) : _user = user;
 
-  final List<User> _users;
+  final List<User> _user;
   @override
-  List<User> get users {
-    if (_users is EqualUnmodifiableListView) return _users;
+  List<User> get user {
+    if (_user is EqualUnmodifiableListView) return _user;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_users);
+    return EqualUnmodifiableListView(_user);
   }
 
   @override
   String toString() {
-    return 'UserListState.loaded(users: $users)';
+    return 'UserListState.loaded(user: $user)';
   }
 
   @override
@@ -380,12 +379,12 @@ class _$UserListLoadedImpl implements UserListLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserListLoadedImpl &&
-            const DeepCollectionEquality().equals(other._users, _users));
+            const DeepCollectionEquality().equals(other._user, _user));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_users));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_user));
 
   /// Create a copy of UserListState
   /// with the given fields replaced by the non-null parameter values.
@@ -401,10 +400,10 @@ class _$UserListLoadedImpl implements UserListLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<User> users) loaded,
+    required TResult Function(List<User> user) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(users);
+    return loaded(user);
   }
 
   @override
@@ -412,10 +411,10 @@ class _$UserListLoadedImpl implements UserListLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<User> users)? loaded,
+    TResult? Function(List<User> user)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(users);
+    return loaded?.call(user);
   }
 
   @override
@@ -423,12 +422,12 @@ class _$UserListLoadedImpl implements UserListLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<User> users)? loaded,
+    TResult Function(List<User> user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(users);
+      return loaded(user);
     }
     return orElse();
   }
@@ -472,10 +471,10 @@ class _$UserListLoadedImpl implements UserListLoaded {
 }
 
 abstract class UserListLoaded implements UserListState {
-  const factory UserListLoaded({required final List<User> users}) =
+  const factory UserListLoaded({required final List<User> user}) =
       _$UserListLoadedImpl;
 
-  List<User> get users;
+  List<User> get user;
 
   /// Create a copy of UserListState
   /// with the given fields replaced by the non-null parameter values.
@@ -554,7 +553,7 @@ class _$UserListErrorImpl implements UserListError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<User> users) loaded,
+    required TResult Function(List<User> user) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -565,7 +564,7 @@ class _$UserListErrorImpl implements UserListError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<User> users)? loaded,
+    TResult? Function(List<User> user)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -576,7 +575,7 @@ class _$UserListErrorImpl implements UserListError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<User> users)? loaded,
+    TResult Function(List<User> user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

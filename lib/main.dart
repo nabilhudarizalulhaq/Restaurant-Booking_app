@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_booking_app/features/datasource/remote_datasource.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/home/home.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/login&register/bloc/auth_bloc.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/login&register/onlogin.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/login&register/login_page.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/login&register/regis_page.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/login/bloc/auth_bloc.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/login/onlogin.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/login/login_page.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/register/regis_page.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/onboading/onboarding.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/splash/splash.dart';
 

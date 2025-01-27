@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:restaurant_booking_app/features/persentation/screen/login&register/bloc/auth_bloc.dart';
+import 'package:restaurant_booking_app/features/persentation/screen/login&register/login/bloc/auth_bloc.dart';
 import 'package:restaurant_booking_app/features/persentation/screen/login&register/widget/button_login.dart';
 import 'package:restaurant_booking_app/features/shared/thame.dart';
 
@@ -84,13 +84,25 @@ class LoginPage extends StatelessWidget {
                   listener: (context, state) {
                     state.maybeWhen(
                       success: (auth) {
-                        // Navigate to home screen when login is successful
-                        Navigator.pushNamed(context, '/home');
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/home', (route) => false);
                       },
                       failure: (error) {
                         // Show error message
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Login failed: $error')),
+                          SnackBar(
+                            backgroundColor: secondaryColor,
+                            content: Center(
+                              child: Text(
+                                'email atau password salah',
+                                style: redTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
                         );
                       },
                       orElse: () {},
@@ -117,8 +129,18 @@ class LoginPage extends StatelessWidget {
                                 );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Please fill in all fields'),
+                              SnackBar(
+                                backgroundColor: secondaryColor,
+                                content: Center(
+                                  child: Text(
+                                    'field tidak boleh kosng',
+                                    style: redTextStyle.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
                               ),
                             );
                           }

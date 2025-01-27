@@ -32,6 +32,9 @@ TextStyle blueTextStyle = GoogleFonts.inter(
 TextStyle greenTextStyle = GoogleFonts.inter(
   color: primaryColor,
 );
+TextStyle redTextStyle = GoogleFonts.inter(
+  color: errorColor,
+);
 
 FontWeight light = FontWeight.w300;
 FontWeight reguler = FontWeight.w400;
